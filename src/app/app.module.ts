@@ -15,18 +15,21 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 
+// MODULO DE SERVICIOS
+import { ServiceModule } from './services/service.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent
-      ],
+  ],
   imports: [
     BrowserModule,
     APP_ROUTES,
     PagesModule,
-    FormsModule
+    FormsModule,
+    ServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
