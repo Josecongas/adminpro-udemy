@@ -15,9 +15,11 @@ import { Graficas1Component } from './graficas1/graficas1.component';
 import { PagesComponent } from './pages.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 // TEMPORAL
 import { IncrementadorComponent } from './../components/incrementador/incrementador.component';
+import { PromesasComponent } from './promesas/promesas.component';
 
 
 
@@ -29,7 +31,9 @@ import { IncrementadorComponent } from './../components/incrementador/incrementa
     PagesComponent,
     IncrementadorComponent,
     GraficoDonaComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    PromesasComponent,
+    RxjsComponent
   ],
   exports: [DashboardComponent, ProgressComponent, Graficas1Component],
   imports: [SharedModule, PAGES_ROUTES, FormsModule, ChartsModule]
