@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 // TEMPORAL
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // RUTAS
 import { APP_ROUTES } from './app.routes';
@@ -28,8 +28,9 @@ import { ServiceModule } from './services/service.module';
     BrowserModule,
     APP_ROUTES,
     PagesModule,
+    ServiceModule,
     FormsModule,
-    ServiceModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
