@@ -10,12 +10,13 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { LoginGuardGuard } from '../services/service.index';
+import { ProfileComponent } from './profile/profile.component';
 
 const pagesRoutes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    canActivate: [ LoginGuardGuard ],
+    canActivate: [LoginGuardGuard],
     children: [
       {
         path: 'dashboard',
@@ -42,10 +43,15 @@ const pagesRoutes: Routes = [
         component: AccountSettingsComponent,
         data: { titulo: 'Account settings' }
       },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { titulo: 'Perfil del usuario' }
+      },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }
 ];
 
-export const PAGES_ROUTES = RouterModule.forChild ( pagesRoutes );
+export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

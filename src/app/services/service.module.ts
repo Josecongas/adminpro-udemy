@@ -1,3 +1,4 @@
+import { SubirArchivoService } from './subir-archivo/subir-archivo.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     SidebarService,
     SettingsService,
     UsuarioService,
-    LoginGuardGuard
+    LoginGuardGuard,
+    SubirArchivoService
   ],
   declarations: []
 })
