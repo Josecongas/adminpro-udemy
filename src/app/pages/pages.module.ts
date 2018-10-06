@@ -16,6 +16,7 @@ import { PagesComponent } from './pages.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 // TEMPORAL
 import { IncrementadorComponent } from './../components/incrementador/incrementador.component';
@@ -24,6 +25,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 // Pipe Module
 import { PipesModule } from '../pipes/pipes.module';
 import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ProfileComponent } from './profile/profile.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsuariosComponent,
+    ModalUploadComponent
   ],
   exports: [DashboardComponent, ProgressComponent, Graficas1Component],
   imports: [

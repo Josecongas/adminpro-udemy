@@ -14,13 +14,9 @@ export class SubirArchivoService {
 
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-          console.log('El archivo es: ' + archivo);
-          console.log('El nombre del archivo es: ' + archivo.name);
           if (xhr.status === 200) {
-            console.log('Imagen subida');
             resolve(JSON.parse(xhr.response));
           } else {
-            console.log('Falló la subida');
             reject(xhr.response);
           }
         }

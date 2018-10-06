@@ -14,18 +14,19 @@ import {
   styles: []
 })
 export class IncrementadorComponent implements OnInit {
-  @ViewChild('txtProgress') txtProgress: ElementRef;
+  @ViewChild('txtProgress')
+  txtProgress: ElementRef;
 
-  @Input('nombre') leyenda: String = 'Leyenda';
-  @Input() progreso: number = 50;
+  @Input('nombre')
+  leyenda: String = 'Leyenda';
+  @Input()
+  progreso: number = 50;
 
-  @Output() cambioValor: EventEmitter<number> = new EventEmitter();
+  @Output()
+  cambioValor: EventEmitter<number> = new EventEmitter();
 
   constructor() {}
-  ngOnInit() {
-    console.log('Leyenda', this.leyenda);
-    console.log('Progreso', this.progreso);
-  }
+  ngOnInit() {}
 
   onChange(newValue) {
     // console.log(newValue);

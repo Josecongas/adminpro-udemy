@@ -9,6 +9,7 @@ import {
   LoginGuardGuard
 } from './service.index';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule],
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     SettingsService,
     UsuarioService,
     LoginGuardGuard,
-    SubirArchivoService
+    SubirArchivoService,
+    ModalUploadService
   ],
   declarations: []
 })

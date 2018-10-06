@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
       this.usuario.email = usuario.email;
     }
     this.usuario.role = 'ADMIN_ROLE';
-    console.log('El rol del usuario es: ' + this.usuario.role);
 
     this._usuarioService.actualizarUsuario(this.usuario).subscribe();
   }
