@@ -32,3 +32,8 @@
 .oculto {
   display: none;
 }
+
+.addNew {
+    text-align: right;
+    padding: 25px;
+}

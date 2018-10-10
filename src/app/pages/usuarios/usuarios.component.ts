@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario/usuario.service';
-import { URL_SERVICIOS } from '../../config/config';
 import { map, debounceTime } from 'rxjs/operators';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';

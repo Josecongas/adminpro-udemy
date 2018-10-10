@@ -42,14 +42,21 @@ export class ModalUploadComponent implements OnInit {
   }
 
   subirImagen() {
-    this._subirArchivoService.subirArchivo( this.imagenSubir, this._modalUploadService.tipo, this._modalUploadService.id)
-    .then( resp => {
+
+    this._subirArchivoService.subirArchivo(this.imagenSubir, this._modalUploadService.tipo, this._modalUploadService.id)
+      .then(resp => {
+        console.log(this.imagenSubir);
+        console.log(this._modalUploadService.tipo);
+        console.log(this._modalUploadService.id);
+
         this._modalUploadService.notificacion.emit(resp);
         this.cerrarModal();
-    })
-    .catch( err => {
 
-    })
+      })
+      .catch(err => {
+        console.log('Error en la carga... ');
+      });
+
   }
 
   cerrarModal() {
