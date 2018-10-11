@@ -1,6 +1,7 @@
 import { SubirArchivoService } from './../subir-archivo/subir-archivo.service';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { Injectable } from '@angular/core';
 import { Usuario } from './../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 export class UsuarioService {
   usuario: Usuario;
   token: string;
+  menu: any = [];
 
   constructor(
     public http: HttpClient,
@@ -29,28 +31,33 @@ export class UsuarioService {
     }
   }
 
-  guardarStorage(id: string, token: string, usuario: Usuario) {
+  guardarStorage(id: string, token: string, usuario: Usuario, menu: any) {
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('menu', JSON.stringify(menu));
 
     this.usuario = usuario;
     this.token = token;
+    this.menu = menu;
   }
 
   cargarStorage() {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.menu = JSON.parse(localStorage.getItem('menu'));
     } else {
       this.token = '';
       this.usuario = null;
+      this.menu = [];
     }
   }
 
   logout() {
     this.token = '';
     this.usuario = null;
+    this.menu = [];
 
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
@@ -63,7 +70,8 @@ export class UsuarioService {
     const url = URL_SERVICIOS + '/login/google';
 
     return this.http.post(url, { token }).map((resp: any) => {
-      this.guardarStorage(resp.id, resp.token, resp.usuario);
+      this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+      console.log('EL LOGIN DE GOOGLE ES: ' + JSON.stringify(resp));
       return true;
     });
   }
@@ -76,20 +84,33 @@ export class UsuarioService {
     }
 
     const url = URL_SERVICIOS + '/login';
-    return this.http.post(url, usuario).map((resp: any) => {
-      this.guardarStorage(resp.id, resp.token, resp.usuario);
+    return this.http
+      .post(url, usuario)
+      .map((resp: any) => {
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+        console.log('EL LOGIN ES: ' + resp);
 
-      return true;
-    });
+        return true;
+      })
+      .catch(err => {
+        swal('Error en el login', err.error.mensaje, 'error');
+        return Observable.throw(err);
+      });
   }
 
   crearUsuario(usuario: Usuario) {
     const url = URL_SERVICIOS + '/usuario';
     console.log(usuario);
-    return this.http.post(url, usuario).map((resp: any) => {
-      swal('Usuario creado');
-      return resp.usuario;
-    });
+    return this.http
+      .post(url, usuario)
+      .map((resp: any) => {
+        swal('Usuario creado');
+        return resp.usuario;
+      })
+      .catch(err => {
+        swal(err.error.mensaje, err.error.errors.message, 'error');
+        return Observable.throw(err);
+      });
   }
 
   actualizarUsuario(usuario: Usuario) {
@@ -98,10 +119,13 @@ export class UsuarioService {
     return this.http.put(url, usuario).map((resp: any) => {
       if (usuario._id === this.usuario._id) {
         const usuarioDB: Usuario = resp.usuario;
-        this.guardarStorage(usuarioDB._id, this.token, usuarioDB);
+        this.guardarStorage(usuarioDB._id, this.token, usuarioDB, this.menu);
       }
       swal('Usuario actualizado', usuario.nombre, 'success');
       return true;
+    }).catch(err => {
+      swal(err.error.mensaje, err.error.errors.message, 'error');
+      return Observable.throw(err);
     });
   }
 
@@ -112,7 +136,7 @@ export class UsuarioService {
         this.usuario.img = resp.usuario.img;
 
         swal('Imagen actualizada', this.usuario.nombre, 'success');
-        this.guardarStorage(id, this.token, this.usuario);
+        this.guardarStorage(id, this.token, this.usuario, this.menu);
       })
       .catch(resp => {});
   }
