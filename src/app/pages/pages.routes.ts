@@ -17,17 +17,13 @@ import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 
 // GUARDS
-import { LoginGuardGuard, AdminGuard } from '../services/service.index';
+import { LoginGuardGuard, AdminGuard, VerificaTokenGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [LoginGuardGuard],
-    children: [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [ VerificaTokenGuard ],
         data: { titulo: 'Dashboard' }
       },
       {
@@ -85,8 +81,6 @@ const pagesRoutes: Routes = [
       },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
-    ]
-  }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

@@ -9,6 +9,7 @@ import { URL_SERVICIOS } from '../../config/config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
+
 @Injectable()
 export class UsuarioService {
   usuario: Usuario;
@@ -139,6 +140,23 @@ export class UsuarioService {
         this.guardarStorage(id, this.token, this.usuario, this.menu);
       })
       .catch(resp => {});
+  }
+
+  renuevaToken() {
+    let url = URL_SERVICIOS + '/login/renuevatoken';
+    url += '?token=' + this.token;
+
+    return this.http.get(url)
+    .map( (resp: any) => {
+      this.token = resp.token;
+      localStorage.setItem('token', this.token);
+      console.log('Token renovado');
+      return true;
+    }).catch( err => {
+      this.router.navigate(['/login']);
+      swal('No se pudo renovar el token', 'No fue posible renovar el token', 'error');
+      return Observable.throw(err);
+    });
   }
 
   cargarUsuarios(desde: number) {

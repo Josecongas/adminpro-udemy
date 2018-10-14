@@ -4,13 +4,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // COMPONENTES
-import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 // Pipe Module
 import { PipesModule } from './../pipes/pipes.module';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 @NgModule({
@@ -22,14 +22,14 @@ import { PipesModule } from './../pipes/pipes.module';
   declarations: [
     BreadcrumbsComponent,
     HeaderComponent,
-    NopagefoundComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalUploadComponent
   ],
   exports: [
     BreadcrumbsComponent,
     HeaderComponent,
-    NopagefoundComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalUploadComponent
   ]
 })
 export class SharedModule {}

@@ -13,6 +13,7 @@ import {
 } from './service.index';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
+import { VerificaTokenGuard } from './guards/verifica-token.guard';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule],
@@ -23,6 +24,7 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     UsuarioService,
     LoginGuardGuard,
     AdminGuard,
+    VerificaTokenGuard,
     SubirArchivoService,
     ModalUploadService,
     HospitalService,
