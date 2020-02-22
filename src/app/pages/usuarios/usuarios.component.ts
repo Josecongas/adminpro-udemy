@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../models/usuario.model';
-import { UsuarioService } from '../../services/usuario/usuario.service';
-import { map, debounceTime } from 'rxjs/operators';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
+import { Component, OnInit } from "@angular/core";
+import { Usuario } from "../../models/usuario.model";
+import { UsuarioService } from "../../services/usuario/usuario.service";
+import { map, debounceTime } from "rxjs/operators";
+import { fromEvent } from "rxjs/observable/fromEvent";
+import { ModalUploadService } from "../../components/modal-upload/modal-upload.service";
 
 declare var swal: any;
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
+  selector: "app-usuarios",
+  templateUrl: "./usuarios.component.html",
   styles: []
 })
 export class UsuariosComponent implements OnInit {
@@ -19,29 +19,30 @@ export class UsuariosComponent implements OnInit {
   totalRegistros: number = 0;
   cargando: boolean = true;
   topeRegistros: boolean = false;
-  constructor(private _usuarioService: UsuarioService,
-    private _modalUploadService: ModalUploadService) {}
+  constructor(
+    private _usuarioService: UsuarioService,
+    private _modalUploadService: ModalUploadService
+  ) {}
 
   ngOnInit() {
     this.cargarUsuarios();
 
-    this._modalUploadService.notificacion
-    .subscribe( resp => {
+    this._modalUploadService.notificacion.subscribe(resp => {
       this.cargarUsuarios();
     });
 
     this.cargando = true;
 
     // Seleccionamos el input en el documento
-    const input = document.getElementById('buscarUsuario');
+    const input = document.getElementById("buscarUsuario");
 
     // En el evento indicado para el elemento seleccionado ejecutamos los pipes y luego el subscribe
-    fromEvent(input, 'input')
+    fromEvent(input, "input")
       .pipe(
         // Tomamos las letras ingresadas en el input
         map((k: KeyboardEvent) => {
           this.cargando = true;
-          return k.target['value'];
+          return k.target["value"];
         }),
         // Seleccionamos un tiempo en milisegundos antes de continuar la ejecución luego de que se presionó la última letra,
         // si hay cambios en el input vuelve a empezar a contar
@@ -50,7 +51,7 @@ export class UsuariosComponent implements OnInit {
         // luego de que se dejara de escribir por 1 segundo
       )
       .subscribe(val => {
-        if (val !== '') {
+        if (val !== "") {
           this._usuarioService
             .buscarUsuarios(val)
             .subscribe((usuarios: Usuario[]) => {
@@ -65,7 +66,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   mostrarModal(id: string) {
-    this._modalUploadService.mostrarModal('usuarios', id);
+    this._modalUploadService.mostrarModal("usuarios", id);
   }
   cargarUsuarios() {
     this.cargando = true;
@@ -100,27 +101,29 @@ export class UsuariosComponent implements OnInit {
 
   borrarUsuario(usuario: Usuario) {
     if (usuario._id === this._usuarioService.usuario._id) {
-      swal(
-        'Error borrando el usuario',
-        'No puede borrar el usuario actual',
-        'error'
+      swal.fire(
+        "Error borrando el usuario",
+        "No puede borrar el usuario actual",
+        "error"
       );
       return;
     }
 
-    swal({
-      title: '¿Esta seguro?',
-      text: 'Esta a punto de borrar a ' + usuario.nombre,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true
-    }).then(borrar => {
-      if (borrar) {
-        this._usuarioService.borrarUsuario(usuario._id).subscribe(borrado => {
-          this.cargarUsuarios();
-        });
-      }
-    });
+    swal
+      .fire({
+        title: "¿Esta seguro?",
+        text: "Esta a punto de borrar a " + usuario.nombre,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then(borrar => {
+        if (borrar) {
+          this._usuarioService.borrarUsuario(usuario._id).subscribe(borrado => {
+            this.cargarUsuarios();
+          });
+        }
+      });
   }
 
   guardarUsuario(usuario: Usuario) {

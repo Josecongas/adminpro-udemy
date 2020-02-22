@@ -1,10 +1,11 @@
-import { ModalUploadService } from './modal-upload.service';
-import { SubirArchivoService } from './../../services/subir-archivo/subir-archivo.service';
-import { Component, OnInit } from '@angular/core';
+import { ModalUploadService } from "./modal-upload.service";
+import { SubirArchivoService } from "./../../services/subir-archivo/subir-archivo.service";
+import { Component, OnInit } from "@angular/core";
+import swal from "sweetalert2";
 
 @Component({
-  selector: 'app-modal-upload',
-  templateUrl: './modal-upload.component.html',
+  selector: "app-modal-upload",
+  templateUrl: "./modal-upload.component.html",
   styles: []
 })
 export class ModalUploadComponent implements OnInit {
@@ -24,11 +25,11 @@ export class ModalUploadComponent implements OnInit {
       return;
     }
 
-    if (archivo.type.indexOf('image') < 0) {
-      swal(
-        'Solo imágenes',
-        'El archivo seleccionado NO es una imagen',
-        'error'
+    if (archivo.type.indexOf("image") < 0) {
+      swal.fire(
+        "Solo imágenes",
+        "El archivo seleccionado NO es una imagen",
+        "error"
       );
       this.imagenSubir = null;
       return;
@@ -42,8 +43,12 @@ export class ModalUploadComponent implements OnInit {
   }
 
   subirImagen() {
-
-    this._subirArchivoService.subirArchivo(this.imagenSubir, this._modalUploadService.tipo, this._modalUploadService.id)
+    this._subirArchivoService
+      .subirArchivo(
+        this.imagenSubir,
+        this._modalUploadService.tipo,
+        this._modalUploadService.id
+      )
       .then(resp => {
         console.log(this.imagenSubir);
         console.log(this._modalUploadService.tipo);
@@ -51,12 +56,10 @@ export class ModalUploadComponent implements OnInit {
 
         this._modalUploadService.notificacion.emit(resp);
         this.cerrarModal();
-
       })
       .catch(err => {
-        console.log('Error en la carga... ');
+        console.log("Error en la carga... ");
       });
-
   }
 
   cerrarModal() {

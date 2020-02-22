@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SweetAlert } from 'sweetalert/typings/core';
-import * as swal from 'sweetalert';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import swal from "sweetalert2";
 
-import { UsuarioService } from '../services/service.index';
-import { Usuario } from '../models/usuario.model';
-import { Router } from '@angular/router';
+import { UsuarioService } from "../services/service.index";
+import { Usuario } from "../models/usuario.model";
+import { Router } from "@angular/router";
 
 declare function init_plugins();
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class RegisterComponent implements OnInit {
   forma: FormGroup;
@@ -45,14 +44,14 @@ export class RegisterComponent implements OnInit {
         password2: new FormControl(null, Validators.required),
         condiciones: new FormControl(false)
       },
-      { validators: this.sonIguales('password', 'password2') }
+      { validators: this.sonIguales("password", "password2") }
     );
 
     this.forma.setValue({
-      nombre: 'Test ',
-      correo: 'test@test.com',
-      password: '123456',
-      password2: '123456',
+      nombre: "Test ",
+      correo: "test@test.com",
+      password: "123456",
+      password2: "123456",
       condiciones: true
     });
   }
@@ -63,7 +62,7 @@ export class RegisterComponent implements OnInit {
     }
 
     if (!this.forma.value.condiciones) {
-      swal('Importante', 'Debe de aceptar las condiciones', 'warning');
+      swal.fire("Importante", "Debe de aceptar las condiciones", "warning");
       return;
     }
 
@@ -75,6 +74,6 @@ export class RegisterComponent implements OnInit {
 
     this._usuarioService
       .crearUsuario(usuario)
-      .subscribe(resp => this.router.navigate(['/login']));
+      .subscribe(resp => this.router.navigate(["/login"]));
   }
 }

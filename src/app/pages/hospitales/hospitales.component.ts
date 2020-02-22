@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { HospitalService } from '../../services/hospital/hospital.service';
-import { Hospital } from '../../models/hospital.model';
-import { map, debounceTime } from 'rxjs/operators';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
-
+import { Component, OnInit } from "@angular/core";
+import { HospitalService } from "../../services/hospital/hospital.service";
+import { Hospital } from "../../models/hospital.model";
+import { map, debounceTime } from "rxjs/operators";
+import { fromEvent } from "rxjs/observable/fromEvent";
+import { ModalUploadService } from "../../components/modal-upload/modal-upload.service";
 
 declare var swal: any;
 
-
 @Component({
-  selector: 'app-hospitales',
-  templateUrl: './hospitales.component.html'
+  selector: "app-hospitales",
+  templateUrl: "./hospitales.component.html"
 })
 export class HospitalesComponent implements OnInit {
-  hospital: Hospital = { nombre: '' };
+  hospital: Hospital = { nombre: "" };
   hospitales: Hospital[] = [];
   desde: number = 0;
 
@@ -38,15 +36,15 @@ export class HospitalesComponent implements OnInit {
     this.cargando = true;
     this._hospitalService.cargarToken();
     // Seleccionamos el input en el documento
-    const input = document.getElementById('buscarHospital');
+    const input = document.getElementById("buscarHospital");
 
     // En el evento indicado para el elemento seleccionado ejecutamos los pipes y luego el subscribe
-    fromEvent(input, 'input')
+    fromEvent(input, "input")
       .pipe(
         // Tomamos las letras ingresadas en el input
         map((k: KeyboardEvent) => {
           this.cargando = true;
-          return k.target['value'];
+          return k.target["value"];
         }),
         // Seleccionamos un tiempo en milisegundos antes de continuar la ejecución luego de que se presionó la última letra,
         // si hay cambios en el input vuelve a empezar a contar
@@ -55,7 +53,7 @@ export class HospitalesComponent implements OnInit {
         // luego de que se dejara de escribir por 1 segundo
       )
       .subscribe(val => {
-        if (val !== '') {
+        if (val !== "") {
           this._hospitalService
             .buscarHospitales(val)
             .subscribe((hospitales: Hospital[]) => {
@@ -70,7 +68,7 @@ export class HospitalesComponent implements OnInit {
   }
 
   mostrarModal(id: string) {
-    this._modalUploadService.mostrarModal('hospitales', id);
+    this._modalUploadService.mostrarModal("hospitales", id);
   }
 
   cargarHospitales() {
@@ -110,33 +108,37 @@ export class HospitalesComponent implements OnInit {
   }
 
   borrarHospital(hospital: Hospital) {
-    console.log('HOSPITAL: ' + hospital._id);
+    console.log("HOSPITAL: " + hospital._id);
 
-    swal({
-      title: '¿Esta seguro?',
-      text: 'Esta a punto de borrar a ' + hospital.nombre,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true
-    }).then(borrar => {
-      if (borrar) {
-        this._hospitalService
-          .borrarHospital(hospital._id)
-          .subscribe(borrado => {
-            this.cargarHospitales();
-          });
-      }
-    });
+    swal
+      .fire({
+        title: "¿Esta seguro?",
+        text: "Esta a punto de borrar a " + hospital.nombre,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then(borrar => {
+        if (borrar) {
+          this._hospitalService
+            .borrarHospital(hospital._id)
+            .subscribe(borrado => {
+              this.cargarHospitales();
+            });
+        }
+      });
   }
 
   crearHospital() {
-    swal('Escribe el nombre del hospital: ', {
-      content: 'input'
-    }).then((nombre: string) => {
-      this.hospital.nombre = nombre;
-      this.hospital.img = '/img/usuarios/xxx';
-      this._hospitalService.crearHospital(this.hospital).subscribe();
-    });
+    swal
+      .fire("Escribe el nombre del hospital: ", {
+        content: "input"
+      })
+      .then((nombre: string) => {
+        this.hospital.nombre = nombre;
+        this.hospital.img = "/img/usuarios/xxx";
+        this._hospitalService.crearHospital(this.hospital).subscribe();
+      });
   }
 
   guardarHospital(hospital: Hospital) {

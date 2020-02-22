@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../models/usuario.model';
-import { UsuarioService } from '../../services/usuario/usuario.service';
+import { Component, OnInit } from "@angular/core";
+import { Usuario } from "../../models/usuario.model";
+import { UsuarioService } from "../../services/usuario/usuario.service";
+import swal from "sweetalert2";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
   styles: []
 })
 export class ProfileComponent implements OnInit {
@@ -24,7 +25,7 @@ export class ProfileComponent implements OnInit {
     if (!this.usuario.google) {
       this.usuario.email = usuario.email;
     }
-    this.usuario.role = 'ADMIN_ROLE';
+    this.usuario.role = "ADMIN_ROLE";
 
     this._usuarioService.actualizarUsuario(this.usuario).subscribe();
   }
@@ -35,11 +36,11 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    if (archivo.type.indexOf('image') < 0) {
-      swal(
-        'Solo imágenes',
-        'El archivo seleccionado NO es una imagen',
-        'error'
+    if (archivo.type.indexOf("image") < 0) {
+      swal.fire(
+        "Solo imágenes",
+        "El archivo seleccionado NO es una imagen",
+        "error"
       );
       this.imagenSubir = null;
       return;
